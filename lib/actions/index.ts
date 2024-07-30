@@ -1,6 +1,7 @@
 "use server";
 
 import { scrapeAmazonProduct } from "../scraper";
+import { connectToDB } from "../mongoose";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) {
@@ -8,7 +9,13 @@ export async function scrapeAndStoreProduct(productUrl: string) {
   }
 
   try {
+    connectToDB();
+
     const scrapedProduct = await scrapeAmazonProduct(productUrl);
+
+    if (!scrapedProduct) {
+      throw new Error("Failed to scrape product");
+    }
   } catch (error: any) {
     throw new Error(`Failed to scrape and store product ${error.message}`);
   }
