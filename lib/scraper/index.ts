@@ -60,15 +60,25 @@ export async function scrapeAmazonProduct(url: string) {
     const rating = $(".a-popover-trigger span.a-size-base.a-color-base")
       .text()
       .trim();
-    console.log(
-      { title },
-      { currentPrice },
-      { originalPrice },
-      { rating },
-      { outOfStock },
-      { imageUrls },
-      { currency }
-    );
+
+    const discountRate = $(".savingsPercentage").text().replace(/[-%]/g, "");
+
+    const data = {
+      url,
+      currency: currency || "USD",
+      image: imageUrls[0],
+      title,
+      currentPrice: Number(currentPrice),
+      originalPrice: Number(originalPrice),
+      priceHistory: [],
+      discountRate: Number(discountRate),
+      stars: Number(rating),
+      reviewCount: Number(rating) > 0 ? 1 : 0,
+      isOutOfStock: outOfStock,
+      category: "category",
+    };
+
+    console.log(data);
   } catch (error: any) {
     throw new Error(`Failed to scrape Amazon product: ${error.message}`);
   }
