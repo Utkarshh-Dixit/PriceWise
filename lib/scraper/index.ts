@@ -57,13 +57,17 @@ export async function scrapeAmazonProduct(url: string) {
 
     const currency = extractCurrency($(".a-price-symbol"));
 
-    const rating = $(".a-popover-trigger span.a-size-base.a-color-base")
+    const rating = $("#averageCustomerReviews #acrCustomerReviewText")
       .text()
-      .trim();
+      .split(" ")[0];
 
     const discountRate = $(".savingsPercentage").text().replace(/[-%]/g, "");
 
     const description = extractDescription($);
+
+    const category = $(
+      ".a-section .a-keyvalue prodDetTable .a-size-base prodDetAttrValue"
+    ).text();
 
     const data = {
       url,
@@ -75,9 +79,9 @@ export async function scrapeAmazonProduct(url: string) {
       priceHistory: [],
       discountRate: Number(discountRate),
       stars: Number(rating),
-      reviewCount: Number(rating) > 0 ? 1 : 0,
+      reviewCount: Number(rating),
       isOutOfStock: outOfStock,
-      category: "category",
+      category: category || "N/A",
       description,
       lowestPrice: Number(currentPrice) || Number(originalPrice),
       highestPrice: Number(originalPrice) || Number(currentPrice),
