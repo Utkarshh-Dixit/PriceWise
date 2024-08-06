@@ -1,3 +1,4 @@
+import PriceInfoCard from "@/components/PriceInfoCard";
 import { getProductById } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
@@ -91,8 +92,65 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                     height={16}
                   />
                 </div>
+                <div className="product-reviews">
+                  <Image
+                    src="/assets/icons/comment.svg"
+                    alt="comment"
+                    width={16}
+                    height={16}
+                  />
+                  <p>{product.reviewCount} Reviews</p>
+                </div>
               </div>
+              <p className="text-sm text-black opacity-50">
+                <span className="text-primary-green font-semibold">93%</span> of
+                buyers recommended this.
+              </p>
             </div>
+          </div>
+          <div className="my-7 flex flex-col gap-5">
+            <div className="flex gap-5 flex-wrap">
+              <PriceInfoCard
+                title="Current Price"
+                iconSrc="/assets/icons/price-tag.svg"
+                value={`${product.currency} ${formatNumber(
+                  product.currentPrice
+                )}`}
+              />
+              <PriceInfoCard
+                title="Average Price"
+                iconSrc="/assets/icons/chart.svg"
+                value={`${product.currency} ${formatNumber(
+                  product.averagePrice
+                )}`}
+              />
+              <PriceInfoCard
+                title="Highest Price"
+                iconSrc="/assets/icons/arrow-up.svg"
+                value={`${product.currency} ${formatNumber(
+                  product.highestPrice
+                )}`}
+              />
+              <PriceInfoCard
+                title="Lowest Price"
+                iconSrc="/assets/icons/arrow-down.svg"
+                value={`${product.currency} ${formatNumber(
+                  product.lowestPrice
+                )}`}
+              />
+            </div>
+          </div>
+          Modal
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-16 border-2 border-black">
+        <div className="flex flex-col gap-5">
+          <h3 className="text-2xl text-secondary font-semibold">
+            Product description
+          </h3>
+          <div className="flex flex-col gap-4">
+            {product?.description?.split("\n")}
           </div>
         </div>
       </div>
