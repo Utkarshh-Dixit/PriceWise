@@ -22,14 +22,7 @@ export async function GET() {
 
     const products = await Product.find({});
 
-    if (!products) {
-      return {
-        status: 404,
-        body: {
-          message: "No products found",
-        },
-      };
-    }
+    if (!products) throw new Error("Error fetching products");
 
     const updatedProducts = await Promise.all(
       products.map(async (currentProduct) => {
