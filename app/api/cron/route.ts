@@ -10,7 +10,7 @@ import {
 } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
-// export const maxDuration = 300;
+export const maxDuration = 60 * 60 * 24; // 24 hours
 
 export const dynamic = "force-dynamic";
 
