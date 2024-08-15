@@ -44,6 +44,9 @@ const Home = async () => {
           ))}
         </div>
       </section>
+      <p className="font-semibold flex justify-center">
+        Checking latest deployment
+      </p>
     </>
   );
 };
